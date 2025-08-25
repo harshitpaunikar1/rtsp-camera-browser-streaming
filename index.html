@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bridging the Protocol Divide: RTSP to Browser WebRTC Delivery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* Greyscale Design System */
+    :root {
+      --bg: #0a0a0a;
+      --fg-light: #ffffff;
+      --text: #e8e8e8;
+      --text-dim: #aaaaaa;
+      --border: #333333;
+      --surface: #1a1a1a;
+      --black-solid: #000000;
+      
+      --font-body: 'Outfit', sans-serif;
+      --font-mono: 'Roboto Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      font-size: 17px;
+    }
+
+    /* Infrastructural and linear layout */
+    .infrastructure-line {
+      position: fixed;
+      left: 2rem;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background-color: var(--border);
+      z-index: -1;
+    }
+
+    header {
+      padding: 6rem 2rem 4rem 4rem;
+      max-width: 800px;
+    }
+
+    h1 {
+      font-family: var(--font-mono);
+      font-size: clamp(2rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: var(--fg-light);
+      line-height: 1.2;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+    h1::before {
+      content: '';
+      position: absolute;
+      left: -2.4rem;
+      top: 0.5rem;
+      width: 0.8rem;
+      height: 0.8rem;
+      background-color: var(--fg-light);
+      border-radius: 50%;
+    }
+
+    .lede {
+      font-size: 1.15rem;
+      color: var(--text-dim);
+      font-weight: 300;
+      max-width: 700px;
+    }
+
+    .content {
+      padding: 0 2rem 6rem 4rem;
+      max-width: 750px;
+    }
+
+    p { margin-bottom: 1.6rem; }
+    strong { color: var(--fg-light); font-weight: 600; }
+
+    /* Transport-layer H2 labels */
+    h2 {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--bg);
+      background-color: var(--text-dim);
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin: 4rem 0 1.5rem 0;
+      position: relative;
+    }
+    h2::before {
+      content: '';
+      position: absolute;
+      left: -2.35rem; /* align to infrastructure line */
+      top: 0.4rem;
+      width: 0.7rem;
+      height: 1px;
+      background-color: var(--text-dim);
+    }
+
+    h3 {
+      font-family: var(--font-body);
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--fg-light);
+      margin: 2rem 0 1rem 0;
+    }
+
+    /* Notation Bands */
+    .notation-band {
+      margin: 2rem 0;
+      padding: 1.5rem 2rem;
+      border: 1px dotted var(--border);
+      border-left: 3px solid var(--text-dim);
+      background-color: var(--surface);
+    }
+    .notation-band p:last-child { margin-bottom: 0; }
+    .notation-band code { font-size: 0.8rem; }
+
+    /* Code Blocks */
+    .code-dark {
+      background-color: var(--black-solid);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      margin: 2rem 0;
+      overflow-x: auto;
+    }
+    pre, code {
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+    }
+    .keyword { color: var(--fg-light); font-weight: bold; }
+    .comment { color: var(--text-dim); }
+
+    /* Long Figure Span */
+    .figure-span {
+      max-width: 1100px;
+      margin: 5rem 0 5rem -2rem; /* pull left to cross the infrastructure line */
+      padding: 0 2rem;
+    }
+    .svg-frame {
+      width: 100%;
+      border: 1px solid var(--border);
+      background-color: var(--black-solid);
+      padding: 2rem;
+    }
+    figcaption {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      margin-top: 1rem;
+      font-family: var(--font-body);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="infrastructure-line"></div>
+
+  <header>
+    <h1>Bridging the Protocol Divide</h1>
+    <p class="lede">Classic IP cameras output RTSP, a protocol web browsers explicitly reject. Converting industrial video for web consumption requires a strictly governed translation bridge, unpacking legacy streaming formats and repacking them into low-latency WebRTC streams under harsh network constraints.</p>
+  </header>
+
+  <div class="content">
+    <h2>[ L1 Base ] The Incompatibility Problem</h2>
+    
+    <p>Millions of deployed IP cameras and industrial visual sensors speak exactly one robust language: the Real Time Streaming Protocol (RTSP). It is ancient, UDP-or-TCP flexible, and universally supported by heavy Video Management Systems. Modern web browsers, however, live in a tightly sandboxed reality. Browsers do not speak RTSP. They cannot open arbitrary TCP sockets to pull a stream, and they certainly cannot ingest raw RTSP payloads over a standard <code>&lt;video&gt;</code> tag without massive latency penalties via intermediate formats like Apple's HLS.</p>
+
+    <p>If the objective is sub-second latency from a warehouse ceiling camera directly into a browser-based operator dashboard, the standard HTTP-based buffering protocols (HLS or DASH) fail entirely. The latency floor for HLS is typically several seconds. The only viable path to real-time ingestion in the browser is WebRTC.</p>
+
+    <p>This creates a strict architectural necessity: a bridge layer that sits on the server, ingests the RTSP feed, maintains connection state, repackages the media payloads, and acts as a WebRTC peer to the connecting browsers. The process is not a mere format wrapper. It is an active protocol translation.</p>
+
+    <h2>[ L2 Ingest ] RTSP Ingest & GStreamer Processing</h2>
+
+    <p>The first stage of the bridge connects to the camera's RTSP endpoint. We use GStreamer as the engine for this translation because of its pipeline-oriented processing blocks. When the server requests the RTSP stream, the camera typically delivers an H.264 encoded video feed interleaved over RTP (Real-time Transport Protocol). Ingesting this stream cleanly requires decoupling the video frames from the older RTSP presentation layer without degrading the H.264 compression.</p>
+
+    <div class="notation-band">
+      <p><strong>Latency preservation rule:</strong> If the camera natively encodes H.264, the pipeline must strictly avoid transcoding the video. Transcoding a 1080p stream from H.264 to VP8 on a bridge server adds devastating CPU load and roughly 300–500ms of latency per frame. The pipeline must demux the RTSP container, parse the raw H.264 Network Abstraction Layer (NAL) units, and parse them directly into the WebRTC transport mechanism.</p>
+    </div>
+
+    <!-- WIDE FIGURE: The Transport Braid -->
+    <div class="figure-span">
+      <div class="svg-frame">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 350" width="100%">
+          <rect width="1000" height="350" fill="#000000" />
+          
+          <!-- Grid lines for engineering feel -->
+          <line x1="0" y1="50" x2="1000" y2="50" stroke="#1a1a1a" stroke-width="1" />
+          <line x1="0" y1="150" x2="1000" y2="150" stroke="#1a1a1a" stroke-width="1" />
+          <line x1="0" y1="250" x2="1000" y2="250" stroke="#1a1a1a" stroke-width="1" />
+          <line x1="250" y1="0" x2="250" y2="350" stroke="#1a1a1a" stroke-width="1" />
+          <line x1="750" y1="0" x2="750" y2="350" stroke="#1a1a1a" stroke-width="1" />
+
+          <!-- Region Labels -->
+          <text x="125" y="30" font-family="'Roboto Mono', monospace" font-size="12" font-weight="700" fill="#666666" text-anchor="middle">INGEST (LOCAL NET)</text>
+          <text x="500" y="30" font-family="'Roboto Mono', monospace" font-size="12" font-weight="700" fill="#666666" text-anchor="middle">EDGE BRIDGE (GSTREAMER)</text>
+          <text x="875" y="30" font-family="'Roboto Mono', monospace" font-size="12" font-weight="700" fill="#666666" text-anchor="middle">DELIVERY (WAN / BROWSER)</text>
+
+          <!-- Devices -->
+          <rect x="50" y="100" width="100" height="80" fill="#1a1a1a" stroke="#ffffff" stroke-width="2" />
+          <text x="100" y="145" font-family="'Outfit', sans-serif" font-size="16" fill="#ffffff" text-anchor="middle">IP Camera</text>
+
+          <rect x="350" y="80" width="300" height="120" fill="none" stroke="#666666" stroke-width="2" stroke-dasharray="8 4"/>
+          <text x="500" y="110" font-family="'Roboto Mono', monospace" font-size="14" fill="#ffffff" text-anchor="middle">GSTREAMER PIPELINE</text>
+
+          <rect x="850" y="100" width="100" height="80" fill="#1a1a1a" stroke="#ffffff" stroke-width="2" />
+          <text x="900" y="145" font-family="'Outfit', sans-serif" font-size="16" fill="#ffffff" text-anchor="middle">Web Client</text>
+
+          <!-- Nodes within bridge -->
+          <rect x="370" y="130" width="70" height="40" fill="#333333" />
+          <text x="405" y="153" font-family="'Roboto Mono', monospace" font-size="10" fill="#ffffff" text-anchor="middle">rtspsrc</text>
+
+          <rect x="465" y="130" width="70" height="40" fill="#333333" />
+          <text x="500" y="153" font-family="'Roboto Mono', monospace" font-size="10" fill="#ffffff" text-anchor="middle">rtph264depay</text>
+
+          <rect x="560" y="130" width="70" height="40" fill="#333333" />
+          <text x="595" y="153" font-family="'Roboto Mono', monospace" font-size="10" fill="#ffffff" text-anchor="middle">webrtcbin</text>
+
+          <rect x="465" y="240" width="70" height="40" fill="#1a1a1a" stroke="#ffffff" stroke-width="1"/>
+          <text x="500" y="263" font-family="'Roboto Mono', monospace" font-size="10" fill="#ffffff" text-anchor="middle">Disk Arch</text>
+
+          <!-- The Transport Braid Paths -->
+          <!-- RTSP Path -->
+          <path d="M 150 140 L 370 140" fill="none" stroke="#aaaaaa" stroke-width="4" />
+          <text x="250" y="130" font-family="'Roboto Mono', monospace" font-size="10" fill="#aaaaaa" text-anchor="middle">TCP/UDP RTSP</text>
+
+          <!-- WebRTC Path -->
+          <path d="M 630 150 C 700 150, 750 140, 850 140" fill="none" stroke="#ffffff" stroke-width="4" marker-end="url(#arrow)" />
+          <text x="750" y="130" font-family="'Roboto Mono', monospace" font-size="10" fill="#ffffff" text-anchor="middle">SRTP / WEBRTC</text>
+
+          <!-- Recording Split (Sidecar path) -->
+          <path d="M 440 150 C 440 260, 440 260, 465 260" fill="none" stroke="#555555" stroke-width="2" stroke-dasharray="4 2" marker-end="url(#arrow-grey)"/>
+          <text x="400" y="260" font-family="'Roboto Mono', monospace" font-size="10" fill="#555555">.mp4</text>
+
+          <!-- Signaling path -->
+          <path d="M 595 120 C 595 60, 900 60, 900 100" fill="none" stroke="#666666" stroke-width="1" stroke-dasharray="2 2" marker-end="url(#arrow-grey)"/>
+          <text x="750" y="55" font-family="'Roboto Mono', monospace" font-size="10" fill="#666666" text-anchor="middle">WSS / Signaling (SDP + ICE)</text>
+
+          <defs>
+            <marker id="arrow" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <polygon points="0 0, 6 3, 0 6" fill="#ffffff" />
+            </marker>
+            <marker id="arrow-grey" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+              <polygon points="0 0, 6 3, 0 6" fill="#555555" />
+            </marker>
+          </defs>
+        </svg>
+      </div>
+      <figcaption>Fig 1. — The Transport Braid. The GStreamer edge bridge is tasked with resolving the protocol mismatch. RTSP payloads enter the pipeline (left), H.264 data is extracted and fed via a tee-junction into both an archive ring-buffer (bottom) and a WebRTC compilation bin (right). WebRTC signaling occurs out-of-band above the main flow, allowing secure DTLS tunnels to form to clients over the WAN.</figcaption>
+    </div>
+
+    <h2>[ L3 Translate ] Delivery & Relay Behavior</h2>
+
+    <p>Handing the parsed frames over to the browser involves adopting WebRTC's formidable security and session management constraints. <code>webrtcbin</code> in GStreamer handles the complex work of Datagram Transport Layer Security (DTLS) handshakes and packetizing the NAL units into Secure Real-Time Transport Protocol (SRTP) packets.</p>
+
+    <p>However, an edge server dropping SRTP packets onto the internet is meaningless if the client cannot route them. Since the server bridge acts as an authoritative peer, it must negotiate ICE (Interactive Connectivity Establishment) candidates with the connecting browser. The bridge server advertises its own public IP through STUN. The browser receives this IP via the signaling channel (usually WebSockets) and attempts to connect.</p>
+
+<div class="code-dark">
+<pre><span class="comment">// Example GStreamer pipeline segment establishing the WebRTC delivery</span>
+<span class="keyword">pipeline_str</span> = 
+  <span class="string">"rtspsrc location=rtsp://cam/stream latency=100 ! "</span>
+  <span class="string">"rtph264depay ! h264parse ! "</span>
+  <span class="string">"rtph264pay config-interval=-1 ! "</span>
+  <span class="string">"webrtcbin name=sendrecv bundle-policy=max-bundle"</span>;</pre>
+</div>
+
+    <p>When multiple browsers request the same camera feed, the architecture faces a fan-out limitation. WebRTC is designed as a peer-to-peer specification. The server must establish a unique, encrypted SRTP session with every single connected browser. A single camera stream fanning out to ten dashboard operators requires the bridge server to encrypt and push ten independent media streams simultaneously. Consequently, network outbound capacity on the bridge block is usually the hard bottleneck before CPU hits limitations.</p>
+
+    <h2>[ L4 Record ] Sidecar Archiving & Load Boundaries</h2>
+
+    <p>The secondary requirement for industrial vision is auditing, which requires persistent recording. In a typical VMS, the server manages the recording directly from the RTSP payload. We mirror this in the bridge using a <code>tee</code> element in the GStreamer pipeline.</p>
+
+    <p>The <code>tee</code> splits the H.264 stream. While one branch pushes packets to <code>webrtcbin</code>, the secondary branch pushes to a heavy <code>mp4mux</code> or <code>matroskamux</code> element, writing to disk in rolling 15-minute segments. Because this fork occurs after the H.264 stream is extracted from RTP, the disk I/O requires zero additional encoding overhead.</p>
+    
+    <p>Ultimately, a successful RTSP-to-WebRTC bridge is defined by its parsimony. It strips the wrapper, avoids touching the pixels, negotiates the tunnel, and secures the delivery. Anything more is a waste of cycles.</p>
+
+  </div>
+
+</body>
+</html>
