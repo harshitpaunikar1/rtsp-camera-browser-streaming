@@ -20,3 +20,7 @@
 
 - Task summary: After stepping away for a bit, came back and the variable names were inconsistent so cleaned those up across the notebook before calling it done.
 - Deliverable: Good enough to not be embarrassing.
+## 2025-08-27 - Day 3: Scope pass
+
+- Task summary: Ended up revisiting this in the evening — pushed a config tweak after noticing the wrong default param was being used.
+- Deliverable: Should've caught it earlier but better now than later.
