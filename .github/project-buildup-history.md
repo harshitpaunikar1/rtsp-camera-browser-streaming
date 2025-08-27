@@ -24,3 +24,7 @@
 
 - Task summary: Ended up revisiting this in the evening — pushed a config tweak after noticing the wrong default param was being used.
 - Deliverable: Should've caught it earlier but better now than later.
+## 2025-08-27 - Day 3: Scope pass
+
+- Task summary: Ended up revisiting this in the evening — fixed a type coercion issue that was causing silent NaN propagation downstream.
+- Deliverable: Good enough to not be embarrassing.
