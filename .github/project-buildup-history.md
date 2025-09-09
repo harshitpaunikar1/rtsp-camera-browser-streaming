@@ -72,3 +72,7 @@
 
 - Task summary: Circled back: wrapped a repeated block in a helper function since it showed up three times.
 - Deliverable: Minor but worth doing.
+## 2025-09-09 - Day 12: Polish wrap
+
+- Task summary: Used the last day on RTSP Camera Browser Streaming to slow down and finish the loose ends. I mainly had to do a final pass for clarity, consistency, and first-impression quality and make sure the project told a clean story from start to finish. Most of the heavy lifting was already done, so this part was more about making the rough edges less obvious. The tricky bit was making the system sound realistic without pretending every edge case was solved.
+- Deliverable: Finished with final polish looking decent enough to call this version done, even if I could still nitpick a few things. It was not super polished, just stable enough that I felt okay moving forward.
