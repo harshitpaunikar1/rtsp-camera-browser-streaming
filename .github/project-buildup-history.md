@@ -22,11 +22,11 @@
 - Deliverable: Good enough to not be embarrassing.
 ## 2025-08-27 - Day 3: Scope pass
 
-- Task summary: Ended up revisiting this in the evening — pushed a config tweak after noticing the wrong default param was being used.
+- Task summary: Ended up revisiting this in the evening - pushed a config tweak after noticing the wrong default param was being used.
 - Deliverable: Should've caught it earlier but better now than later.
 ## 2025-08-27 - Day 3: Scope pass
 
-- Task summary: Ended up revisiting this in the evening — fixed a type coercion issue that was causing silent NaN propagation downstream.
+- Task summary: Ended up revisiting this in the evening - fixed a type coercion issue that was causing silent NaN propagation downstream.
 - Deliverable: Good enough to not be embarrassing.
 ## 2025-08-28 - Day 4: User flow
 
@@ -47,7 +47,7 @@
 ## 2025-09-02 - Day 7: HTML scaffold
 
 - Task summary: Late-night fix: spent time just reading back through everything to make sure it still made sense end to end.
-- Deliverable: Nothing dramatic — just keeping things tidy.
+- Deliverable: Nothing dramatic - just keeping things tidy.
 ## 2025-09-03 - Day 8: Styling
 
 - Task summary: This was the middle stretch where the project started feeling real. I kept going and tried to apply layout, spacing, color, and typography until the project reads clearly, then cleaned up whatever looked confusing or weak from the earlier days. Once the base made some sense, I could finally move a bit faster and stop second guessing every tiny decision. There were a few moving parts here, so I kept simplifying the plan in my head before touching anything else.
@@ -62,7 +62,7 @@
 - Deliverable: Ended the day with support visuals in hand, plus a few side notes on what still needed fixing later. I also left myself a few rough reminders for the next day so I would not have to rediscover the same context again.
 ## 2025-09-05 - Day 10: Artifacts
 
-- Task summary: Got stuck mid-afternoon and had to regroup — the test I wrote this morning had a hardcoded path, swapped it for a relative one.
+- Task summary: Got stuck mid-afternoon and had to regroup - the test I wrote this morning had a hardcoded path, swapped it for a relative one.
 - Deliverable: Small fix, clean result.
 ## 2025-09-08 - Day 11: README check
 
